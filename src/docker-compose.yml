@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+    telestrainer:
+        build:
+            context: ''
+            dockerfile: docker/Dockerfile
+        container_name: telestrainer

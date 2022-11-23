@@ -1,7 +1,11 @@
-version: '3.3'
+version: '3.9'
 services:
     telestrainer:
         build:
             context: ''
             dockerfile: docker/Dockerfile
         container_name: telestrainer
+        volumes:
+            - service:/project/
+volumes:
+    service:

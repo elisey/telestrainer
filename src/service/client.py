@@ -20,8 +20,8 @@ class Client(TelegramClient):  # type: ignore[misc]
         api_hash: str,
         session_key: str,
         strainer: StrainerInterface,
-        send_to_channel: int,
-        monitor_channels: Collection[int],
+        send_to_channel: str,
+        monitor_channels: Collection[str],
     ):
         super().__init__(StringSession(session_key), api_id=api_id, api_hash=api_hash)
         self.strainer = strainer

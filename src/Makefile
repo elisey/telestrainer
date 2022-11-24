@@ -1,6 +1,10 @@
+.PHONY: test
+test:
+	cd service && python -m pytest ../tests
+
 .PHONY: mypy
 mypy:
-	mypy .
+	mypy service
 
 .PHONY: black
 black:
@@ -15,4 +19,4 @@ isort:
 	isort .
 
 .PHONY: ci
-ci: mypy black isort flake8
+ci: mypy black isort flake8 test

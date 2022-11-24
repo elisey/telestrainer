@@ -2,14 +2,14 @@ import logging
 
 from client import Client
 from core.config import settings
-from strainer import Strainer
+from strainer import StrainerSmart
 
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 
 def main() -> None:
-    strainer = Strainer(settings.strain_parts)
+    strainer = StrainerSmart()
     client = Client(
         settings.api_id,
         settings.api_hash,

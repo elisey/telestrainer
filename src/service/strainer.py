@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 
 
@@ -14,5 +15,18 @@ class Strainer(StrainerInterface):
     def strain(self, content: str) -> str:
         for item in self.to_remove:
             content = content.replace(item, "")
+
+        return content
+
+
+class StrainerSmart(StrainerInterface):
+    def strain(self, content: str) -> str:
+        pattern = (
+            r"ДАННОЕ\sСООБЩЕНИЕ\s\(МАТЕРИАЛ\)\sСОЗДАНО\sИ\s\(ИЛИ\)\sРАСПРОСТРАНЕНО\sИНОСТРАННЫМ"
+            r"\sСРЕДСТВОМ\sМАССОВОЙ\sИНФОРМАЦИИ,\sВЫПОЛНЯЮЩИМ\sФУНКЦИИ\sИНОСТРАННОГО\sАГЕНТА,\s"
+            r"И\s\(ИЛИ\)\sРОССИЙСКИМ\sЮРИДИЧЕСКИМ\sЛИЦОМ,\sВЫПОЛНЯЮЩИМ\sФУНКЦИИ\sИНОСТРАННОГО\sАГЕНТА\.? ?"
+        )
+        content = re.sub(pattern, "", content)
+        content = re.sub("\n{4,}", "\n\n", content)
 
         return content

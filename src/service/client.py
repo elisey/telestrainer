@@ -32,7 +32,11 @@ class Client(TelegramClient):  # type: ignore[misc]
     async def messages_event_handler(self, event: NewMessage.Event) -> None:
         logger.info(f"Received event: {event}")
         message = event.message
-        message.message = self.strainer.strain(message.message)
+        strained_message = self.strainer.strain(message.message)
+        if not strained_message:
+            logger.info("Empty message after straining. Skip")
+        else:
+            message.message = strained_message
         channel = await self.get_entity(self.send_to_channel)
         await self.send_message(channel, message)
 

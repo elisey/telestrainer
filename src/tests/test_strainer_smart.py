@@ -17,6 +17,11 @@ def message():
     )
 
 
+def test_strainer_empty(strainer, message):
+    data = f"{message}"
+    assert strainer.strain(data) == ""
+
+
 def test_strainer_simple(strainer, message):
     data = f"begin {message} end"
     assert strainer.strain(data) == "begin end"

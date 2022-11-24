@@ -3,9 +3,10 @@ from __future__ import annotations
 import logging
 from typing import Collection
 
-from strainer import StrainerInterface
 from telethon import TelegramClient, events
 from telethon.events.newmessage import NewMessage
+
+from strainer import StrainerInterface
 
 
 logger = logging.getLogger(__name__)

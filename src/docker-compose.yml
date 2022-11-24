@@ -7,5 +7,12 @@ services:
         container_name: telestrainer
         volumes:
             - service:/project/
+        networks:
+            - vpc
+
 volumes:
     service:
+
+networks:
+  vpc:
+    name: telestrainer-network

@@ -21,3 +21,9 @@ vim .env
 
 docker-compose up --build -d
 ```
+
+### Session keys
+
+About sessions please read [here](https://docs.telethon.dev/en/stable/concepts/sessions.html).
+
+To generate session key use script `src/utils/generate_session_key.py`

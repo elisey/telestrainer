@@ -5,13 +5,8 @@ services:
             context: ''
             dockerfile: docker/Dockerfile
         container_name: telestrainer
-        volumes:
-            - service:/project/
         networks:
             - vpc
-
-volumes:
-    service:
 
 networks:
   vpc:

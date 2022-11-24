@@ -13,8 +13,8 @@ def main() -> None:
     client = Client(
         settings.api_id,
         settings.api_hash,
+        settings.session_key,
         strainer,
-        settings.session_name,
         settings.send_to_channel,
         settings.monitor_channels,
     )

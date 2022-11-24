@@ -5,6 +5,7 @@ from typing import Collection
 
 from telethon import TelegramClient, events
 from telethon.events.newmessage import NewMessage
+from telethon.sessions import StringSession
 
 from strainer import StrainerInterface
 
@@ -17,12 +18,12 @@ class Client(TelegramClient):  # type: ignore[misc]
         self,
         api_id: int,
         api_hash: str,
+        session_key: str,
         strainer: StrainerInterface,
-        session_name: str,
         send_to_channel: int,
         monitor_channels: Collection[int],
     ):
-        super().__init__(session_name, api_id=api_id, api_hash=api_hash)
+        super().__init__(StringSession(session_key), api_id=api_id, api_hash=api_hash)
         self.strainer = strainer
         self.send_to_channel = send_to_channel
 

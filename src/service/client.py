@@ -6,6 +6,7 @@ from typing import Collection
 from telethon import TelegramClient, events
 from telethon.events.newmessage import NewMessage
 from telethon.sessions import StringSession
+from telethon.tl.types import Message
 
 from strainer import StrainerInterface
 
@@ -30,14 +31,25 @@ class Client(TelegramClient):  # type: ignore[misc]
         event_message_filter = events.NewMessage(chats=set(monitor_channels))
         self.add_event_handler(self.messages_event_handler, event_message_filter)
 
+    async def _handle_message(self, message: Message) -> Message:
+        strained_data = self.strainer.strain(message.message)
+        if not strained_data.content:
+            logger.info("Empty message after straining. Skip")
+            return message
+
+        message.message = strained_data.content
+
+        if message.entities:
+            for entity in message.entities:
+                if entity.offset > strained_data.offset:
+                    entity.offset -= strained_data.length
+        return message
+
     async def messages_event_handler(self, event: NewMessage.Event) -> None:
         logger.info(f"Received event: {event}")
-        message = event.message
-        strained_message = self.strainer.strain(message.message)
-        if not strained_message:
-            logger.info("Empty message after straining. Skip")
-        else:
-            message.message = strained_message
+
+        message = await self._handle_message(event.message)
+
         channel = await self.get_entity(self.send_to_channel)
         await self.send_message(channel, message)
 
